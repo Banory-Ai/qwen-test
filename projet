@@ -1,0 +1,339 @@
+Crée une application mobile d'optimisation des marges et de contrôle des stocks en temps réel pour restaurants/fastfood’s, qui permet à la serveuse d'aller prendre les commandes en naviguant dans le menu et en cochants les plats etc.... Prendre la commande : Sélectionner une table, cliquer sur un produit, et ajuster la quantité.
+
+Le principe
+
+Utilisation simplifiée : Le serveur utilise l'application uniquement pour prendre les commandes.
+
+Automatisation : En arrière-plan, chaque commande validée soustrait automatiquement les ingrédients ou les portions du stock disponible.
+
+Utilité clé : L'application sert à ça : piloter la cuisine, éviter les ruptures en plein rush et savoir exactement ce qu'il reste en réserve grâce aux commandes saisies.
+
+Valorisation des données : A analyser les données : savoir quels sont les plats les plus commandé, quand... et pleins d'autres infos potentiellement utiles pour le restaurant, car c'est la ou ce trouve la véritable valeur.
+
+Spécifications Fonctionnelles & Configuration
+
+Authentification des serveurs/serveuses :
+
+Email + mot de passe
+
+Gestion du menu et stock (au démarrage) :
+
+Interface admin pour créer menu/ingrédients depuis zéro
+
+Analytics / Tableau de bord :
+
+Les deux
+
+Fonctionnalités à inclure dans l'application :
+
+Prise de commande par table + ajustement quantité ; Décrémentation auto du stock d'ingrédients ; Statut des commandes; Modification/annulation de commande.
+
+Gestion des Unités & Modèle de Stock (UOM)
+
+Les restaurants gèrent plusieurs types d’unités pour le même ingrédient :
+
+Type d’unité
+
+Nom
+
+Exemples concrets
+
+Quand on l’utilise
+
+Unité d’achat (Purchase UOM)
+
+Celle du fournisseur
+
+Caisse (CS), Colis, Sac, Carton, Bouteille, Bidon, kg, Litre
+
+Quand on commande et reçoit la marchandise
+
+Unité de base / Stock (Inventory UOM)
+
+Unité principale de suivi
+
+kg, gramme (g), Litre, Pièce (EA), Portion
+
+Pour le stock théorique et le décrément auto
+
+Unité de recette / Utilisation (Recipe UOM)
+
+Celle utilisée en cuisine
+
+gramme, once (oz), cuillère à soupe, portion, tranche, pièce
+
+Dans les fiches techniques (BOM)
+
+Unité de comptage (Count UOM)
+
+Pratique pour l’inventaire physique
+
+Caisse, Canette, Pièce, Pan, Bouteille
+
+Pour compter rapidement sans trop calculer
+
+Unité alternative (Alternate Count Unit)
+
+Deuxième option de comptage
+
+Ex: compter en "caisses" au lieu de "kg"
+
+Pour faciliter les comptages manuels
+
+Exemples concrets de conversion d'unités
+
+Tomates Roma :
+
+Achat : caisse de 25 lbs (ou 11-12 kg).
+
+Utilisation : pièce ou gramme.
+
+Comptage : parfois "caisse" ou "pièce".
+
+Viande (ex: faux-filet) :
+
+Achat : colis de ~8-10 kg.
+
+Utilisation : gramme ou portion.
+
+Comptage : colis ou kg.
+
+Liste des analyses que l’application doit faire
+
+1. Analyses de ventes & popularité des plats
+
+Analyse
+
+Pourquoi c’est critique (témoignages)
+
+Priorité
+
+Top plats commandés (global + par période)
+
+Savoir exactement quels plats se vendent le plus pour mieux prévoir les commandes et réduire le gaspillage sur les plats peu vendus
+
+★★★★★
+
+Ventes par heure / jour de la semaine / service
+
+Identifier les pics et anticiper les besoins en stock avant les rush
+
+★★★★★
+
+Ventes par serveur / par table
+
+Détecter des patterns (formation, upselling, ou vols/comps excessifs)
+
+★★★★
+
+Évolution des ventes dans le temps (tendances hebdo/mensuelles)
+
+Voir ce qui monte ou descend pour ajuster le menu ou les commandes
+
+★★★★
+
+2. Analyses de consommation & rotation des stocks (priorité MAX)
+
+Analyse
+
+Pourquoi c’est critique
+
+Priorité
+
+Consommation réelle d’ingrédients (via décrément auto des commandes)
+
+C’est le cœur de l’app : savoir exactement ce qui sort grâce aux commandes validées
+
+★★★★★
+
+Taux de rotation des stocks (inventory turnover) par ingrédient
+
+Éviter le surstock (argent immobilisé + péremption) et le sous-stock
+
+★★★★★
+
+Produits à forte vs faible rotation
+
+Optimiser les achats et l’espace de stockage
+
+★★★★
+
+Historique des niveaux de stock
+
+Voir les tendances de consommation pour mieux ancitiper
+
+★★★★
+
+3. Analyses de Food Cost & rentabilité (priorité MAX – vraie valeur de l’app)
+
+Analyse
+
+Pourquoi c’est critique
+
+Priorité
+
+Food Cost % théorique vs réel (global + par plat/catégorie)
+
+Les restaurateurs disent constamment que leur food cost explose sans savoir pourquoi
+
+★★★★★
+
+Top ingrédients qui pèsent le plus dans les coûts
+
+Identifier les "money leaks" (ingrédients chers qui partent vite)
+
+★★★★★
+
+COGS (Cost of Goods Sold) par plat
+
+Savoir précisément la rentabilité réelle de chaque plat
+
+★★★★★
+
+Évolution du Food Cost dans le temps + alertes déviation
+
+Détecter rapidement quand quelque chose dérape (hausse prix fournisseur, gaspillage, etc.)
+
+★★★★★
+
+4. Analyses de variance & pertes (très importante – à intégrer rapidement)
+
+Analyse
+
+Pourquoi c’est critique
+
+Priorité
+
+Écarts stock théorique vs comptage physique (variance report)
+
+C’est LE gros समस्या récurrent : vols, gaspillage non déclaré, sur-portions, repas staff, comps
+
+★★★★★
+
+Identification des sources de variance (si possible avec logging)
+
+Distinguer vol / gaspillage / erreur de portion / spoilage
+
+★★★★
+
+Suivi du gaspillage et de la casse
+
+Beaucoup de restaurateurs perdent 3-5 % sans le tracker correctement
+
+★★★★
+
+Produits à fort risque de variance (viandes, alcools, produits frais)
+
+Focus sur les postes les plus sensibles
+
+★★★★
+
+5. Prévisions & alertes opérationnelles (forte valeur ajoutée)
+
+Analyse
+
+Pourquoi c’est critique
+
+Priorité
+
+Alertes low stock / risque de rupture (en temps réel ou prédictif)
+
+Éviter les ruptures en plein rush (problème très souvent cité)
+
+★★★★★
+
+Prévisions de besoins en ingrédients (basées sur historique de commandes)
+
+Arrêter de commander "à l’œil" ou trop tard
+
+★★★★★
+
+Suggestions de par levels (niveaux minimums à maintenir)
+
+Basés sur la consommation réelle passée
+
+★★★★
+
+Détection de pics de demande inhabituels
+
+Anticiper les jours chargés ou événements
+
+★★★★
+
+6. Analyses business avancées (V2 / différenciation forte)
+
+Analyse
+
+Pourquoi c’est critique
+
+Priorité
+
+Performance du menu (plats rentables vs non rentables)
+
+Beaucoup de restaurants gardent des plats qui coûtent cher et se vendent peu
+
+★★★★
+
+Impact des changements de prix fournisseurs
+
+Détecter rapidement les hausses et ajuster
+
+★★★
+
+Efficacité des portions (via analyse de variance)
+
+Vérifier si les fiches techniques sont respectées
+
+★★★
+
+Analyse par catégorie (entrées, plats, desserts, boissons, alcools)
+
+Focus sur les postes les plus problématiques
+
+★★★
+
+Synthèse des Priorités
+
+donc l’application doit absolument analyser :
+
+Ce qui se vend (popularité + timing)
+
+Ce que ça coûte vraiment (Food Cost précis et tendances)
+
+Ce qui sort vraiment du stock (consommation via commandes + variance)
+
+Ce qui risque de manquer (prévisions + alertes)
+
+Où part l’argent (variance, gaspillage, sur-portions)
+
+Choix Techniques & Infrastructure
+
+Focus sur le "Local-First" (La Synchro)
+
+Pour que la serveuse ne soit pas bloquée si le Wi-Fi du resto saute :
+
+Il faut utiliser AsyncStorage ou SQLite pour stocker la commande immédiatement.
+
+Horodatage d'une commande : Même en local, l'application doit enregistrer le moment exact (donc la date et l'heure) d'une commande.
+
+Dès que la connexion revient, Grok configurera un "Edge Function" sur Supabase qui traitera la file d'attente des commandes pour mettre à jour le stock global.
+
+Voici la stack technique
+
+Framework Mobile : Expo (React Native) + Expo Router.
+
+Interface (UI) : NativeWind (Tailwind CSS pour mobile).
+
+Base de données Locale (Offline-first) : SQLite avec PowerSync (pour la synchronisation transparente).
+
+Backend & Cloud : Supabase (PostgreSQL, Auth, Edge Functions).
+
+Logique de Stock : Triggers SQL (PostgreSQL) pour la décrémentation automatique des ingrédients lors de l'insertion d'une commande.
+
+Analytics : Victory Native XL (Graphiques haute performance).
+
+Environnement de Dev : Grok Build CLI + rendu Expo Web (test direct dans le navigateur).
+
+Le flux
+
+Expo (UI) -> SQLite (Local) <-> PowerSync (Sync) <-> Supabase (Cloud + Logique Stock)
